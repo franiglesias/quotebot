@@ -1,5 +1,4 @@
-legacy-testing-kata-python
-==========================
+# Legacy Testing Kata - Python Version
 
 A legacy codebase that resists testing.
 
@@ -15,7 +14,7 @@ This is a Python port of the original Java kata, which draws on a C# code kata a
 - pip (Python package installer)
 - (Optional) A virtual environment tool like `venv` or `virtualenv`
 
-## Quick Start
+## How to Run
 
 ### 1. Create and activate a virtual environment (recommended)
 
@@ -67,6 +66,23 @@ python -m quotebot.application
 
 **Warning:** The application will display dialog boxes and takes ~5 seconds to run due to the intentionally slow database access.
 
+## Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with verbose output
+pytest -v
+
+# Run with coverage report
+pytest --cov=quotebot
+
+# Generate HTML coverage report
+pytest --cov=quotebot --cov-report=html
+# Open htmlcov/index.html in your browser
+```
+
 ## Project Structure
 
 ```
@@ -89,24 +105,12 @@ quotebot-python/
 └── README.md
 ```
 
-## Running Tests
+## The Challenge
 
-```bash
-# Run all tests
-pytest
-
-# Run with verbose output
-pytest -v
-
-# Run with coverage report
-pytest --cov=quotebot
-
-# Generate HTML coverage report
-pytest --cov=quotebot --cov-report=html
-# Open htmlcov/index.html in your browser
-```
-
-## Your Mission
+This legacy codebase resists testing. Your goal is to make it testable so you can:
+1. Add tests to verify behavior
+2. Fix the FIXMEs in the code safely
+3. Refactor the code with confidence
 
 The code has two FIXMEs that need to be addressed:
 
@@ -120,53 +124,30 @@ However, the codebase is **intentionally difficult to test**. Your goal is to:
 3. **Make the changes** indicated by the FIXMEs
 4. **Verify** your changes work correctly with your tests
 
-## Development Workflow
+## Legacy Code Problems in This Kata
 
-```bash
-# 1. Make your changes to the code
-
-# 2. Run tests to verify behavior
-pytest -v
-
-# 3. Check test coverage
-pytest --cov=quotebot --cov-report=term-missing
-
-# 4. Run the application to see it in action
-export license=dummy
-python -m quotebot.application
-```
-
-## Cleaning Up
-
-```bash
-# Deactivate virtual environment
-deactivate
-
-# Remove virtual environment (optional)
-rm -rf venv
-
-# Clean build artifacts
-rm -rf build/ dist/ *.egg-info .pytest_cache/ htmlcov/ .coverage
-```
-
----
-
-If you hesitate where to start, here are some of the tricky bits that make it hard to test:
-
-Lack of dependency injection:
+### Lack of Dependency Injection
 - A static main with no args
 - Static service
 - Hard-coded instantiation of a service that itself instantiates its dependencies, and again
 
-Implementation issues:
+### Implementation Issues
 - Very slow service
-- Hidden dependency to a license key in env variable
-- Random return value -> non-deterministic test
-- Dialog poping up prompting for user input
+- Hidden dependency on LICENSE environment variable
+- Random return value → non-deterministic tests
+- Dialog popping up prompting for user input
 
-Other tricks:
-- New Date() in the middle of calculations -> non-deterministic test
-- High combinatorial of calculations lead to too many required test cases
-- Stateful behavior from internal cache: first call different from next calls
-- Heavy dependency called within a large loop with different values
+### Other Challenges
+- New Date() in calculations → non-deterministic tests
+- High combinatorial complexity in calculations
+- Stateful behavior from internal cache (first call different from subsequent calls)
+- Heavy dependency called within loop with different values
 - Use a dependency or another depending on the passed parameter
+
+## Getting Started
+
+Try to run the code first. You'll likely encounter issues right away!
+
+Then, work on making the code testable by addressing the problems above.
+
+Good luck!

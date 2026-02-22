@@ -1,19 +1,6 @@
-QuoteBot legacy kata
-===
+# Legacy Testing Kata - PHP Version
 
-This is a code exercise to practice how to manage and improve legacy code. It's not very big, and you can make it evolve progressively:
-
-* Make it run.
-* Make it testable and create some tests.
-* Refactor and fix.
-* Make it evolve, so it becomes a well-structured application.
-* Make it Hexagonal :-)
-
-## Notes from the original README:
-
-A legacy codebase that resist a bit testing, by Cyrille Martraire.
-
-[Original kata](https://github.com/cyriux/legacy-testing-kata-java)
+A legacy codebase that resists testing.
 
 First try to run it.
 
@@ -21,150 +8,126 @@ Then your goal is to make it testable so that you can make changes (FIXME inside
 
 This code draws on a C# code kata authored by my distinguished colleague Nicolas M.; Thanks Nicolas for the good ideas in the kata!
 
-## Personal notes about this kata
+## Prerequisites
 
-This kata is very interesting to practice several refactor techniques. 
+- PHP 7.4 or higher
+- Composer
+- Docker and Docker Compose (optional, for containerized setup)
 
-At first, you won't be able to test it, so you should rely on secure refactor techniques as provided by your IDE.
+## How to Run
 
-One interesting suggestion is to define and keep two environments for this exercise: one that simulates a **production** setting, and one for the **development/testing**. This way, you can introduce changes and see how they would affect the production side. You should commit **small sets of changes** that doesn't break the application in production environment.
+### Option 1: Local Setup
 
-## Notes on PHP version
+1. Install dependencies:
 
-This PHP version tries to mimic the behavior of the original java.
-
-To try the code, clone or download this repo.
-
-Then, run composer:
-
-```
+```bash
 composer install
 ```
 
-This will install PHPUnit. PSR4 autoload for the `QuoteBot` namespace and `lib` folder uses classmap.
+2. Run the application:
 
-Finally, execute the run.php script to see how this program works (to say something):
-
-```
+```bash
 php run.php
 ```
 
-Or use the IDE facilities to run.
+**Important note:** You must not touch the `lib` folder, as it is considered vendor code.
 
-**Important note:** you must not touch the `lib` folder, given it is considered a vendor. 
+### Option 2: Using Docker
 
-## Notes on practicing this kata using docker
+1. Start the containers:
 
-### Requisitos previos
-
-- Docker
-- Docker Compose
-
-### Configuración inicial
-
-1. **Levantar los contenedores**
-
-   La primera vez necesitará descargar las imágenes, lo que puede tomar algunos minutos.
-
-   ```bash
-   docker compose up -d
-   ```
-
-   **Nota**: Si estás en Apple Silicon (M1/M2/M3), el archivo `docker-compose.yml` ya incluye la configuración `platform: linux/amd64` necesaria para ejecutar las imágenes correctamente.
-
-2. **Instalar dependencias de Composer**
-
-   ```bash
-   docker exec quotebot composer install
-   ```
-
-3. **Ejecutar la aplicación**
-
-   ```bash
-   docker exec quotebot php run.php
-   ```
-
-### Comandos útiles
-
-- **Acceder al contenedor**:
-  ```bash
-  docker exec -it quotebot bash
-  ```
-
-- **Ver logs de los contenedores**:
-  ```bash
-  docker compose logs -f
-  ```
-
-- **Detener los contenedores**:
-  ```bash
-  docker compose down
-  ```
-
-- **Ejecutar tests**:
-  ```bash
-  docker exec quotebot vendor/bin/phpunit
-  ```
-
-### Servicios disponibles
-
-- **Aplicación PHP**: Contenedor `quotebot`
-
-## Notes on configuring PHPStorm with the dockerized environment
-
-First, start up docker containers.
-
-```
+```bash
 docker compose up -d
 ```
 
-### Configure PHP CLI
+**Note**: If you're on Apple Silicon (M1/M2/M3), the `docker-compose.yml` already includes the necessary `platform: linux/amd64` configuration.
 
-Go to **PHP Storm > Preferences > Languages and Frameworks > PHP**
+2. Install dependencies:
 
-Clic **CLI Interpreter …**
+```bash
+docker exec quotebot composer install
+```
 
-Add Remote Interpreter from Docker
+3. Run the application:
 
-Select (radio button) **docker-compose** and select **php-fpm** service.
+```bash
+docker exec quotebot php run.php
+```
 
-### Configure XDebug
+4. Access the container:
 
-Go to **PHP Storm > Preferences > Languages and Frameworks > PHP > Debug**
+```bash
+docker exec -it quotebot bash
+```
 
-Make sure XDebug port is 9001
+5. Stop the containers:
 
-### Configure PhpUnit
+```bash
+docker compose down
+```
 
-Go to **PHP Storm > Preferences > Languages and Frameworks > PHP > Test Frameworks**
+## Running Tests
 
-Add **PhpUnit by remote interpreter** configuration. Select the remote Interpreter you've configured before.
+### Local
 
-PHPUnit Library from composer autoloader. Path to script should be: vendor/autoload.php
+```bash
+vendor/bin/phpunit
+```
 
-Select phpunit.xml as default configuration file.
+### Docker
 
+```bash
+docker exec quotebot vendor/bin/phpunit
+```
 
-## Where to start? Extracted notes from the original
+## Configuring PHPStorm with Docker
 
-If you hesitate where to start, here are some of the tricky bits that make it hard to test:
+1. Start containers: `docker compose up -d`
+2. Go to **PHP Storm > Preferences > Languages and Frameworks > PHP**
+3. Click **CLI Interpreter…** and add Remote Interpreter from Docker
+4. Select **docker-compose** and choose the **php-fpm** service
+5. Configure XDebug port to 9001 in **PHP > Debug**
+6. Add **PhpUnit by remote interpreter** in **Test Frameworks**
+7. Set composer autoloader path: `vendor/autoload.php`
+8. Select `phpunit.xml` as default configuration file
 
-* Lack of dependency injection:
-* A static main with no args
-* Static service
-* Hard-coded instantiation of a service that itself instantiates its dependencies, and again
+## The Challenge
 
-Implementation issues:
+This legacy codebase resists testing. Your goal is to make it testable so you can:
+1. Add tests to verify behavior
+2. Fix the FIXMEs in the code safely
+3. Refactor the code with confidence
 
-* Very slow service
-* Hidden dependency to a license key in env variable
-* Random return value -> non-deterministic test
-* Dialog popping up prompting for user input
+## Legacy Code Problems in This Kata
 
-Other tricks:
+### Lack of Dependency Injection
+- A static main with no args
+- Static service
+- Hard-coded instantiation of a service that itself instantiates its dependencies, and again
 
-* New Date() in the middle of calculations -> non-deterministic test
-* High combinatorial of calculations lead to too many required test cases
-* Stateful behavior from internal cache: first call different from next calls
-* Heavy dependency called within a large loop with different values
-* Use a dependency or another depending on the passed parameter
+### Implementation Issues
+- Very slow service
+- Hidden dependency on LICENSE environment variable
+- Random return value → non-deterministic tests
+- Dialog popping up prompting for user input
+
+### Other Challenges
+- New Date() in calculations → non-deterministic tests
+- High combinatorial complexity in calculations
+- Stateful behavior from internal cache (first call different from subsequent calls)
+- Heavy dependency called within loop with different values
+- Use a dependency or another depending on the passed parameter
+
+## Getting Started
+
+This kata is very interesting to practice several refactoring techniques.
+
+At first, you won't be able to test it, so you should rely on secure refactoring techniques as provided by your IDE.
+
+One interesting suggestion is to define and keep two environments for this exercise: one that simulates a **production** setting, and one for **development/testing**. This way, you can introduce changes and see how they would affect the production side. You should commit **small sets of changes** that don't break the application in the production environment.
+
+Try to run the code first. You'll likely encounter issues right away!
+
+Then, work on making the code testable by addressing the problems above.
+
+Good luck!

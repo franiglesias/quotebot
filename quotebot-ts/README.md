@@ -1,19 +1,6 @@
-QuoteBot legacy kata
-===
+# Legacy Testing Kata - TypeScript Version
 
-This is a code exercise to practice how to manage and improve legacy code. It's not very big, and you can make it evolve progressively:
-
-* Make it run. The current code doesn't run at all in a local development environment. And it does, it is wasting money on every run.
-* Make it testable and create some tests. There are lots of coupling, at least for a very small project like this.
-* Refactor and fix. Introduce some sanity in the code.
-* Make it evolve, so it becomes a well-structured application. It would be nice. Make it Hexagonal, or Layered... or whatever interesting architecture you want to try.
-* Change implementations of the `QuotePublisher` so you can get a good report of the job that this bot is doing.
-
-## Notes from the original README:
-
-A legacy codebase that resist a bit testing, by Cyrille Martraire.
-
-[Original kata](https://github.com/cyriux/legacy-testing-kata-java)
+A legacy codebase that resists testing.
 
 First try to run it.
 
@@ -21,57 +8,36 @@ Then your goal is to make it testable so that you can make changes (FIXME inside
 
 This code draws on a C# code kata authored by my distinguished colleague Nicolas M.; Thanks Nicolas for the good ideas in the kata!
 
-## Personal notes about this kata
-
-This kata is very interesting to practice several refactor techniques.
-
-At first, you won't be able to test it, so you should rely on proven refactor techniques, some of them could be provided by your IDE.
-
-One interesting suggestion is to define and keep two environments for this exercise: one that simulates a **production** setting, and one for the **development/testing**. This way, you can introduce changes and see how they would affect the production side. You should commit **small sets of changes** that doesn't break the application in production environment.
-
 ## Prerequisites
 
 - Node.js 18 or higher
 - npm 9 or higher
 
-## Initial Setup
+## How to Run
 
-1. Clone or download this repository
-2. Install dependencies:
+### 1. Install dependencies
 
-```shell
+```bash
 npm install
 ```
 
-## Project Structure
+### 2. Build the project
 
-```
-quotebot-ts/
-├── src/           # TypeScript source code
-├── lib/           # Vendor code (DO NOT MODIFY)
-├── dist/          # Compiled JavaScript files
-├── node_modules/  # Dependencies
-└── ...
-```
-
-## Available Scripts
-
-### Build
-
-```shell
-# Build the project
+```bash
 npm run build
-
-# Build in watch mode (automatically recompiles)
-npm run build:watch
-
-# Clean compiled files
-npm run clean
 ```
 
-### Testing
+### 3. Run the application
 
-```shell
+```bash
+npm start
+```
+
+**Note**: The application will fail with a license error unless you set the LICENSE environment variable. However, setting it in development/testing is not recommended as it would call real services.
+
+## Running Tests
+
+```bash
 # Run tests once
 npm test
 
@@ -85,9 +51,24 @@ npm run test:ui
 npm run test:coverage
 ```
 
+## Available Scripts
+
+### Build
+
+```bash
+# Build the project
+npm run build
+
+# Build in watch mode (automatically recompiles)
+npm run build:watch
+
+# Clean compiled files
+npm run clean
+```
+
 ### Linting
 
-```shell
+```bash
 # Check code with ESLint
 npm run lint
 
@@ -95,14 +76,18 @@ npm run lint
 npm run lint:fix
 ```
 
-### Execution
+## Project Structure
 
-```shell
-# Build and run the project
-npm start
+```
+quotebot-ts/
+├── src/           # TypeScript source code
+├── lib/           # Vendor code (DO NOT MODIFY)
+├── dist/          # Compiled JavaScript files
+├── node_modules/  # Dependencies
+└── ...
 ```
 
-## Environment Configuration
+## Configuration
 
 ### TypeScript
 - TypeScript files are in `src/` and `lib/`
@@ -119,56 +104,45 @@ npm start
 - Includes code coverage with v8
 - Configuration: `vitest.config.ts`
 
-## Kata Notes
+## The Challenge
 
-This project is a legacy code exercise. **DO NOT MODIFY** the `lib/` folder as it is considered vendor code.
+This legacy codebase resists testing. Your goal is to make it testable so you can:
+1. Add tests to verify behavior
+2. Fix the FIXMEs in the code safely
+3. Refactor the code with confidence
 
-### Initial Problem
+**Important note:** You must not touch the `lib` folder, as it is considered vendor code. The purpose of the exercise is to practice how to deal with these problems without touching that vendor code, and without setting a LICENSE environment variable in dev/local/test environments.
 
-When you run the code you will see a license error:
+## Legacy Code Problems in This Kata
 
-```shell
-npm start
-```
+### Lack of Dependency Injection
+- A static main with no args
+- Static service
+- Hard-coded instantiation of a service that itself instantiates its dependencies, and again
 
-```text
-Error [InvalidLicenseError]: [Stupid license] Missing license!!!!
-```
+### Implementation Issues
+- Very slow service
+- Hidden dependency on LICENSE environment variable
+- Random return value → non-deterministic tests
+- Dialog popping up prompting for user input
 
-You could use an environment variable `LICENSE='quotebot-license'` to make it work, but:
-1. In a real environment this would cost money
-2. It's not portable or suitable for development/testing
+### Other Challenges
+- New Date() in calculations → non-deterministic tests
+- High combinatorial complexity in calculations
+- Stateful behavior from internal cache (first call different from subsequent calls)
+- Heavy dependency called within loop with different values
+- Use a dependency or another depending on the passed parameter
 
-### Goal
+## Getting Started
 
-The goal is to make the code testable and refactor it without:
-- Modifying the `lib/` folder
-- Using environment variables in development/testing
-- Spending money on real services during development
+This kata is very interesting to practice several refactoring techniques.
 
-**Important note:** you must not touch the `lib` folder, given it is considered a vendor. In fact, the purpose of the exercise is to practice how to deal with these problems without touching that vendors, and without setting a LICENSE env variable in the dev/local/test environments.
+At first, you won't be able to test it, so you should rely on proven refactoring techniques, some of them could be provided by your IDE.
 
-## Where to start? Extracted notes from the original
+One interesting suggestion is to define and keep two environments for this exercise: one that simulates a **production** setting, and one for **development/testing**. This way, you can introduce changes and see how they would affect the production side. You should commit **small sets of changes** that don't break the application in the production environment.
 
-If you hesitate where to start, here are some of the tricky bits that make it hard to test:
+Try to run the code first. You'll likely encounter issues right away!
 
-* Lack of dependency injection:
-* A static main with no args
-* Static service
-* Hard-coded instantiation of a service that itself instantiates its dependencies, and again
+Then, work on making the code testable by addressing the problems above.
 
-Implementation issues:
-
-* Very slow service
-* Hidden dependency to a license key in env variable
-* Random return value -> non-deterministic test
-* Dialog popping up prompting for user input
-
-Other tricks:
-
-* New Date() in the middle of calculations -> non-deterministic test
-* High combinatorial of calculations lead to too many required test cases
-* Stateful behavior from internal cache: first call different from next calls
-* Heavy dependency called within a large loop with different values
-* Use a dependency or another depending on the passed parameter
-
+Good luck!

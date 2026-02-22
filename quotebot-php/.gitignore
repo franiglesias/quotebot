@@ -1,5 +1,44 @@
+# Composer
+/vendor/
+composer.phar
+composer.lock
+
+# PHPUnit
+.phpunit.cache/
+.phpunit.result.cache
+phpunit.xml.bak
+
+# Test coverage
+/coverage/
+/build/
+clover.xml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDEs
 .idea/
-bin/
-vendor/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+.buildpath
+
+# OS
 .DS_Store
-/.env
+Thumbs.db
+*.swp
+*~
+
+# Logs
+*.log
+
+# Cache
+/cache/
+/tmp/
+
+# Docker volumes
+/docker-data/

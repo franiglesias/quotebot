@@ -1,5 +1,7 @@
-legacy-testing-kata-java
-========================
+Legacy Testing Kata
+===================
+
+Original description from https://github.com/cyriux/legacy-testing-kata-java by [Cyrille Martraire](https://github.com/cyriux)
 
 A legacy codebase that resist a bit testing.
 
@@ -30,3 +32,21 @@ Other tricks:
 - Stateful behavior from internal cache: first call different from next calls
 - Heavy dependency called within a large loop with different values
 - Use a dependency or another depending on the passed parameter
+
+
+## Notes for this repository
+
+### Why this kata?
+
+I knew about this kata in a coding dojo at Codurance Barcelona. It is the first kata that helped me to understand how to put legacy code under test. So, It became one of my favorite exercises to put in practice refactoring and legacy code management technique.
+
+So, I decided to put several versions of this kata in different languages for using in coding-dojos, courses, or as an example for blog posts.
+
+Some of the versions available in this repository are:
+
+1. [Java](quotebot-java)
+2. [PHP](quotebot-php)
+3. [Python](quotebot-python)
+4. [TypeScript](quotebot-ts)
+5. [Go](quotebot-go)
+
