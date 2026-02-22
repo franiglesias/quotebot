@@ -1,0 +1,59 @@
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+.project
+.classpath
+.settings/
+
+# Node.js / TypeScript (quotebot-ts)
+quotebot-ts/node_modules/
+quotebot-ts/dist/
+quotebot-ts/build/
+quotebot-ts/*.log
+quotebot-ts/npm-debug.log*
+quotebot-ts/yarn-debug.log*
+quotebot-ts/yarn-error.log*
+quotebot-ts/.pnp
+quotebot-ts/.pnp.js
+quotebot-ts/coverage/
+
+# PHP (quotebot-php)
+quotebot-php/vendor/
+quotebot-php/composer.lock
+
+# Java (quotebot-java)
+quotebot-java/target/
+quotebot-java/*.class
+quotebot-java/*.jar
+quotebot-java/*.war
+quotebot-java/*.ear
+quotebot-java/.gradle/
+quotebot-java/build/
+quotebot-java/out/
+
+# Python (quotebot-python)
+quotebot-python/__pycache__/
+quotebot-python/*.py[cod]
+quotebot-python/*$py.class
+quotebot-python/*.so
+quotebot-python/.Python
+quotebot-python/venv/
+quotebot-python/env/
+quotebot-python/ENV/
+quotebot-python/*.egg-info/
+quotebot-python/dist/
+quotebot-python/build/
+quotebot-python/.pytest_cache/
