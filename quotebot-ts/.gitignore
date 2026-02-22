@@ -1,0 +1,18 @@
+# Compiled output
+dist/
+
+# Dependencies
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Test coverage
+coverage/
+
+# Logs
+*.log
