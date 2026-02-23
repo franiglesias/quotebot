@@ -49,4 +49,5 @@ Some of the versions available in this repository are:
 3. [Python](quotebot-python)
 4. [TypeScript](quotebot-ts)
 5. [Go](quotebot-go)
+6. [Elixir](quotebot-elixir)
 
